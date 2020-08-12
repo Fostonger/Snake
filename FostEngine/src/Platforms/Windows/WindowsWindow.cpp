@@ -1,6 +1,7 @@
 #include "fostpch.h"
 #include "WindowsWindow.h"
 #include "FostEngine/Events/KeyEvent.h"
+#include "FostEngine/Events/ApplicationEvent.h"
 
 namespace Fost {
 	static bool s_GLFWInitialized = false;
@@ -35,6 +36,15 @@ namespace Fost {
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
+
+		//Setting up GLFW events
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			WindowCloseEvent event;
+
+			data.EventCallback(event);
+		});
+
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
@@ -55,7 +65,7 @@ namespace Fost {
 				break;
 			}
 			}
-			});
+		});
 	}
 	void WindowsWindow::OnUpdate()
 	{

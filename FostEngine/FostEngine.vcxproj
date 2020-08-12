@@ -151,7 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\FostEngine\Application.h" />
     <ClInclude Include="src\FostEngine\Core.h" />
+    <ClInclude Include="src\FostEngine\Events\ApplicationEvent.h" />
     <ClInclude Include="src\fostpch.h" />
     <ClInclude Include="src\FostEngine\Log.h" />
     <ClInclude Include="src\FostEngine\Events\Event.h" />

@@ -5,7 +5,8 @@ namespace Fost {
 	enum class EventType
 	{
 		None = 0,
-		KeyPressed, KeyReleased
+		KeyPressed, KeyReleased,
+		WindowClose
 	};
 
 #define EVENT_CLASS_TYPE(type)  static EventType GetStaticType() {return EventType::##type; }\

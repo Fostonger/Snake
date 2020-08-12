@@ -1,8 +1,26 @@
 #include "fostpch.h"
+#include "FostEngine/Application.h"
 #include <GLFW/glfw3.h>
 
+class Snaky : public Fost::Application 
+{
+public:
+	Snaky() {};
+	~Snaky(){};
+
+};
+
+extern Fost::Application* Fost::CreateApplication();
 int main() 
 {
 	Fost::Log::Init();
-	Fost::Log::GetClientLogger()->info("Static library is fine, so is logging system");
+
+	auto app = Fost::CreateApplication();
+	app->Run();
+	delete app;
+}
+
+Fost::Application* Fost::CreateApplication() 
+{
+	return new Snaky();
 }
