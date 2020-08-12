@@ -1,0 +1,3 @@
+[submodule "FostEngine\\vendor\\spdlog"]
+	path = FostEngine\\vendor\\spdlog
+	url = https://github.com/gabime/spdlog

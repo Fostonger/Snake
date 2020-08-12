@@ -1,5 +1,5 @@
 #pragma once
-#include "Window.h"
+#include "FostEngine\Window.h"
 #include <GLFW/glfw3.h>
 
 namespace Fost {

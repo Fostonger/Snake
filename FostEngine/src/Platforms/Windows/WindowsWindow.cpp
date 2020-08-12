@@ -1,4 +1,6 @@
+#include "fostpch.h"
 #include "WindowsWindow.h"
+#include "FostEngine/Events/KeyEvent.h"
 
 namespace Fost {
 	static bool s_GLFWInitialized = false;
@@ -24,22 +26,54 @@ namespace Fost {
 		if (!s_GLFWInitialized) 
 		{
 			int succeed = glfwInit();
-			if (!succeed)
-				
+			FOST_CORE_ASSERT(succeed, "Clould not initialize GLFW!");
 			s_GLFWInitialized = true;
 		}
+
+		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
+		glfwMakeContextCurrent(m_Window);
+		glfwSetWindowUserPointer(m_Window, &m_Data);
+		SetVSync(true);
+
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+			switch (action) {
+			case GLFW_PRESS: {
+				KeyPressedEvent event(key, 0);
+				data.EventCallback(event);
+				break;
+			}
+			case GLFW_RELEASE: {
+				KeyReleasedEvent event(key);
+				data.EventCallback(event);
+				break;
+			}
+			case GLFW_REPEAT: {
+				KeyPressedEvent event(key, 1);
+				data.EventCallback(event);
+				break;
+			}
+			}
+			});
 	}
 	void WindowsWindow::OnUpdate()
 	{
 	}
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		if (enabled)
+			glfwSwapInterval(1);
+		else
+			glfwSwapInterval(0);
+		m_Data.VSync = enabled;
 	}
 	bool WindowsWindow::IsVSync() const
 	{
-		return false;
+		return m_Data.VSync;
 	}
 	void WindowsWindow::Shutdown()
 	{
+		glfwDestroyWindow(m_Window);
 	}
 }

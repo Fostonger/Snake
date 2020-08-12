@@ -1,0 +1,2 @@
+C:\dev\snake\Snake\Debug\FostEngine.pdb
+C:\dev\snake\Snake\FostEngine\Debug\FostEngine.pdb
